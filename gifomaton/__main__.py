@@ -38,6 +38,7 @@ except:
 import pygame
 import pygame.camera
 from pygame.locals import *
+from scene import *
 
 black = (0,0,0)
 
@@ -49,10 +50,12 @@ pygame.display.set_caption('Gifomaton')
 mode_args = DOUBLEBUF
 if config['fullscreen']:
     mode_args |= FULLSCREEN | HWSURFACE
-display = pygame.display.set_mode(screen_size, mode_args)
-display.fill(black)
+screen = pygame.display.set_mode(screen_size, mode_args)
+screen.fill(black)
 
 clock = pygame.time.Clock()
+
+manager = SceneMananger()
 
 running = True
 while running:
@@ -60,6 +63,9 @@ while running:
     for e in events:
         if e.type == QUIT or (e.type == KEYDOWN and e.key == K_ESCAPE):
            running = False
+    manager.scene.handle_events(events)
+    manager.scene.update()
+    manager.scene.render(screen)
     pygame.display.flip()
     clock.tick()
     #print(clock.get_fps())
