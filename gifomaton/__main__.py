@@ -30,3 +30,39 @@ try:
 except:
     logging.critical("Error reading {}".format(_conf_fname))
     raise
+
+
+###############################################################################
+# main
+
+import pygame
+import pygame.camera
+from pygame.locals import *
+
+black = (0,0,0)
+
+pygame.init()
+pygame.camera.init()
+screen_size = config['screen_size']
+pygame.display.set_caption('Gifomaton')
+
+mode_args = DOUBLEBUF
+if config['fullscreen']:
+    mode_args |= FULLSCREEN | HWSURFACE
+display = pygame.display.set_mode(screen_size, mode_args)
+display.fill(black)
+
+clock = pygame.time.Clock()
+
+running = True
+while running:
+    events = pygame.event.get()
+    for e in events:
+        if e.type == QUIT or (e.type == KEYDOWN and e.key == K_ESCAPE):
+           running = False
+    pygame.display.flip()
+    clock.tick()
+    #print(clock.get_fps())
+
+pygame.camera.quit()
+pygame.quit()
