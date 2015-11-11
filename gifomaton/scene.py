@@ -19,7 +19,7 @@ class Scene(object):
     def update(self):
         raise NotImplementedError
 
-    def handle_events(self, events):
+    def inlet(self, events):
         raise NotImplementedError
 
 
@@ -36,7 +36,7 @@ class MenuScene(object):
     def update(self):
         pass
 
-    def handle_events(self, events):
+    def inlet(self, events):
         for e in events:
             if e.type == KEYDOWN and e.key == K_SPACE:
                 self.manager.go_to(GameScene(0))

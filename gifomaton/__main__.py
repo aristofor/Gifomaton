@@ -63,7 +63,7 @@ while running:
     for e in events:
         if e.type == QUIT or (e.type == KEYDOWN and e.key == K_ESCAPE):
            running = False
-    manager.scene.handle_events(events)
+    manager.scene.inlet(events)
     manager.scene.update()
     manager.scene.render(screen)
     pygame.display.flip()
