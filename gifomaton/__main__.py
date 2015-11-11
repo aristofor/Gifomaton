@@ -47,9 +47,9 @@ pygame.camera.init()
 screen_size = config['screen_size']
 pygame.display.set_caption('Gifomaton')
 
-mode_args = DOUBLEBUF
+mode_args = DOUBLEBUF | HWSURFACE
 if config['fullscreen']:
-    mode_args |= FULLSCREEN | HWSURFACE
+    mode_args |= FULLSCREEN
 screen = pygame.display.set_mode(screen_size, mode_args)
 screen.fill(black)
 
