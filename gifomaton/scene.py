@@ -8,6 +8,8 @@ TODO : MenuScene affiche le titre, ce sera le menu
 import pygame
 from pygame.locals import *
 
+__all__ = ('Scene','SceneManager')
+
 class Scene(object):
 
     def __init__(self):
@@ -23,29 +25,11 @@ class Scene(object):
         raise NotImplementedError
 
 
-class MenuScene(object):
 
-    def __init__(self):
-        super(MenuScene, self).__init__()
-        self.font = pygame.font.SysFont('andalemono', 64)
+class SceneManager(object):
 
-    def render(self, screen):
-        text1 = self.font.render('GIFOMATON', True, (255, 255, 255))
-        screen.blit(text1, (450, 320))
-
-    def update(self):
-        pass
-
-    def inlet(self, events):
-        for e in events:
-            if e.type == KEYDOWN and e.key == K_SPACE:
-                self.manager.go_to(GameScene(0))
-
-
-class SceneMananger(object):
-
-    def __init__(self):
-        self.go_to(MenuScene())
+    def __init__(self, start_scene):
+        self.go_to(start_scene)
 
     def go_to(self, scene):
         self.scene = scene
