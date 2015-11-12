@@ -3,6 +3,7 @@
 import pygame
 from pygame.locals import *
 from scene import Scene
+from player import PlayerScene
 
 from models import mock_seqs
 
@@ -38,9 +39,10 @@ class MenuScene(Scene):
                     except StopIteration:
                         missing = True
                         i = None
-        print self.tiles
+        #print self.tiles
 
     def render(self, screen):
+        screen.fill((0,0,0))
         sr = screen.get_rect()
         if sr != self._screen_rect:
             self._screen_rect = sr
@@ -61,5 +63,6 @@ class MenuScene(Scene):
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 for z in self.tiles:
                     if z['rect'].collidepoint(event.pos):
-                        print("{} click".format(z['name']))
+                        #print("go_to {}".format(z['name']))
+                        self.manager.go_to(PlayerScene(z['name']))
                         break

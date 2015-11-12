@@ -12,6 +12,8 @@ __all__ = ('Scene','SceneManager')
 
 class Scene(object):
 
+    manager = None
+
     def __init__(self):
         pass
 
