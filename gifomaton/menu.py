@@ -4,7 +4,6 @@ import pygame
 from pygame.locals import *
 from scene import Scene
 
-from itertools import takewhile
 from models import mock_seqs
 
 class MenuScene(Scene):
@@ -64,4 +63,3 @@ class MenuScene(Scene):
                     if z['rect'].collidepoint(event.pos):
                         print("{} click".format(z['name']))
                         break
-
