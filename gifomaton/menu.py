@@ -4,6 +4,7 @@ import pygame
 from pygame.locals import *
 from scene import Scene
 from player import PlayerScene
+from capture import CaptureScene
 
 from models import mock_seqs
 
@@ -13,9 +14,13 @@ class MenuScene(Scene):
     rows = 2
     _screen_rect = None
     _location = None
-    tiles = None
     item_size = (430,310)
     gut = 20
+
+    # Play hitboxes
+    tiles = None
+    # Capture command
+    captr = None
 
     def __init__(self):
         super(MenuScene, self).__init__()
@@ -39,9 +44,13 @@ class MenuScene(Scene):
                     except StopIteration:
                         missing = True
                         i = None
+        self.captr = Rect(0,0,0,0)
         #print self.tiles
 
     def render(self, screen):
+        """
+        FIXME: hitboxes et rectangles pas alignés (move fautif)
+        """
         screen.fill((0,0,0))
         sr = screen.get_rect()
         if sr != self._screen_rect:
@@ -50,10 +59,14 @@ class MenuScene(Scene):
                 (sr[2]-( self.cols*(self.item_size[0]+self.gut)-self.gut ))/2,
                 (sr[3]-( self.cols*(self.item_size[1]+self.gut)-self.gut ))/2,
             )
-        title_gfx = self.font.render('GIFOMATON', True, (255, 255, 255))
-        screen.blit(title_gfx, (470, 364))
+            self.captr = Rect(sr[2]/2-60, sr[3]/2-50, 120, 100)
         for z in self.tiles:
             pygame.draw.rect(screen,(255,0,0), (z['rect']).move(self._location),1)
+
+        pygame.draw.rect(screen, (33,31,31), self.captr, 0)
+        pygame.draw.circle(screen, (255,0,0), (sr[2]/2, sr[3]/2), 40, 0)
+        title_gfx = self.font.render('GIFOMATON', True, (255, 255, 255))
+        screen.blit(title_gfx, (470, 364))
 
     def update(self):
         pass
@@ -61,8 +74,12 @@ class MenuScene(Scene):
     def inlet(self, events):
         for event in events:
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                for z in self.tiles:
-                    if z['rect'].collidepoint(event.pos):
-                        #print("go_to {}".format(z['name']))
-                        self.manager.go_to(PlayerScene(z['name']))
-                        break
+                if self.captr.collidepoint(event.pos):
+                    self.manager.go_to(CaptureScene())
+                    break
+                else:
+                    for z in self.tiles:
+                        if z['rect'].collidepoint(event.pos):
+                            #print("go_to {}".format(z['name']))
+                            self.manager.go_to(PlayerScene(z['name']))
+                            break
