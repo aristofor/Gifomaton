@@ -10,12 +10,12 @@ from models import mock_seqs
 
 class MenuScene(Scene):
 
-    cols = 2
-    rows = 2
+    cols = 3
+    rows = 3
     _screen_rect = None
     _location = None
     item_size = (430,310)
-    gut = 20
+    gut = 10
 
     # Play hitboxes
     tiles = None
