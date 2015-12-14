@@ -39,6 +39,7 @@ import pygame
 import pygame.camera
 from pygame.locals import *
 from scene import SceneManager
+from display import DisplayScene
 from menu import MenuScene
 
 black = (0,0,0)
@@ -56,7 +57,7 @@ screen.fill(black)
 
 clock = pygame.time.Clock()
 
-manager = SceneManager(MenuScene())
+manager = SceneManager(DisplayScene('mentions.gif',Rect(201,374,336,40),MenuScene()))
 
 running = True
 while running:
