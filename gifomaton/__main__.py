@@ -39,7 +39,7 @@ import pygame
 import pygame.camera
 from pygame.locals import *
 from scene import SceneManager
-from display import DisplayScene
+from display import *
 from menu import MenuScene
 
 black = (0,0,0)
@@ -57,7 +57,13 @@ screen.fill(black)
 
 clock = pygame.time.Clock()
 
-manager = SceneManager(DisplayScene('mentions.gif',Rect(201,374,336,40),MenuScene()))
+_menu = MenuScene()
+_modemploi3 = DisplayTimeoutScene('modemploi3.gif',4,_menu)
+_modemploi2 = DisplayTimeoutScene('modemploi2.gif',4,_modemploi3)
+_modemploi1 = DisplayTimeoutScene('modemploi1.gif',4,_modemploi2)
+_mentions = DisplayHitboxScene('mentions.gif',Rect(201,374,336,40),_modemploi1)
+
+manager = SceneManager(_mentions)
 
 running = True
 while running:
